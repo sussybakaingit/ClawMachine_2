@@ -69,13 +69,12 @@ func _process(delta):
 		emit_signal("timer_updated", time_remaining)
 		
 		# Failsafe prize chute detection:
-		# A toy has dropped down the delivery hole only when it enters below the floor (Y < 0.65)
-		# inside the chute boundaries (X < -0.20 and Z > 0.20)
+		# If any toy is inside the chute pocket (X < -0.19 and Z > 0.19 and Y < 1.05) and not yet delivered
 		if prize_manager and "spawned_toys" in prize_manager:
 			for toy in prize_manager.spawned_toys:
 				if is_instance_valid(toy) and not toy.get("is_delivered"):
 					var p = toy.global_position
-					if p.x < -0.20 and p.z > 0.20 and p.y < 0.65:
+					if p.x < -0.19 and p.z > 0.19 and p.y < 1.05:
 						_on_delivery_hole_body_entered(toy)
 
 func _unhandled_input(event):
@@ -102,8 +101,9 @@ func _on_hand_release_gesture():
 
 func _on_delivery_hole_body_entered(body: Node3D):
 	if body.has_method("set_grabbed") and not body.get("is_delivered"):
-		# Verify toy is down at the chute level (Y <= 0.74) and not on top of the divider or bed
-		if body.global_position.y > 0.74:
+		# Ensure body is within the chute boundaries (X <= -0.18 and Z >= 0.18)
+		var p = body.global_position
+		if p.x > -0.18 or p.z < 0.18:
 			return
 			
 		body.set("is_delivered", true)

@@ -1,8 +1,8 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b5jwr7vugxl3q"]
 
-[ext_resource type="PackedScene" path="res://Assets/Claw machine/clawMachine.glb" id="1_vhxm2"]
+[ext_resource type="PackedScene" uid="uid://bj1ioudydurbl" path="res://Assets/Claw machine/clawMachine.glb" id="1_vhxm2"]
 [ext_resource type="PackedScene" path="res://scenes/claw_assembly.tscn" id="2_4luw5"]
-[ext_resource type="Script" path="res://scripts/prize_manager.gd" id="3_43qfp"]
+[ext_resource type="Script" uid="uid://dmyq4ariy36mg" path="res://scripts/prize_manager.gd" id="3_43qfp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8v8um"]
 size = Vector3(1, 0.04, 1)
@@ -26,11 +26,11 @@ size = Vector3(0.02, 0.35, 0.22)
 size = Vector3(0.22, 0.35, 0.02)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_chute_trigger"]
-size = Vector3(0.22, 0.25, 0.22)
+size = Vector3(0.24, 0.32, 0.24)
 
 [node name="ClawMachine" type="Node3D" unique_id=1386709939]
 
-[node name="MachineModel" type="Node3D" parent="." unique_id=1509034489 instance=ExtResource("1_vhxm2")]
+[node name="MachineModel" parent="." unique_id=1509034489 instance=ExtResource("1_vhxm2")]
 
 [node name="CabinetColliders" type="StaticBody3D" parent="." unique_id=2093620630]
 
@@ -63,14 +63,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, 0.9, 0.18)
 shape = SubResource("BoxShape3D_m0yxf")
 
 [node name="DeliveryHoleArea" type="Area3D" parent="." unique_id=1776761046]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32, 0.6, 0.32)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32, 0.85, 0.32)
 collision_layer = 0
 collision_mask = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DeliveryHoleArea" unique_id=381927401]
 shape = SubResource("BoxShape3D_chute_trigger")
 
-[node name="ClawAssembly" type="Node3D" parent="." unique_id=612277780 instance=ExtResource("2_4luw5")]
+[node name="ClawAssembly" parent="." unique_id=612277780 instance=ExtResource("2_4luw5")]
 
 [node name="PrizeManager" type="Node3D" parent="." unique_id=584286972]
 script = ExtResource("3_43qfp")

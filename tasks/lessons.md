@@ -15,8 +15,8 @@
 - **Root Cause:** Creating a blank `np.zeros` canvas instead of resizing and annotating the actual camera frame.
 - **Rule:** Use `cv2.resize(frame)` as the background for landmark rendering and preview textures so the player has a clear view of their actual hand and environment.
 
-## 4. Delivery Area & Fallback Spatial Bounds Height
-- **Symptom:** At game start, the score immediately explodes to 20k+ as combo multipliers trigger on resting prizes.
-- **Root Cause:** Trigger volumes and fallback spatial checks had vertical bounds (`Y < 0.92`) higher than the machine's prize floor (`Y = 0.74`), or trigger boxes that extended horizontally outside the chute dividers into the prize bed.
-- **Rule:** The delivery trigger area and any spatial fallback must reside strictly BELOW the floor level (`Y < 0.65`) and strictly within the chute perimeter. In addition, toy spawners must enforce a clean margin away from the chute boundary so settled toys never overlap with the chute rim.
+## 4. Delivery Area & Chute Bounds
+- **Symptom:** Either score instantly explodes at start due to prizes outside the chute triggering delivery, or score never updates because the height filter is lower than the chute's floor plane.
+- **Root Cause:** In arcade cabinets where the floor collider spans the full cabinet, toys dropped into the chute pocket land on the floor at `Y ~ 0.76` inside the walled pocket (`X < -0.18` and `Z > 0.18`). If an Area3D trigger or filter checks `Y < 0.74`, the landed toy is rejected; if it checks without horizontal bounds (`X` and `Z`), toys resting on the prize bed get falsely counted.
+- **Rule:** The delivery trigger area and spatial fallback must be bounded strictly by the chute's horizontal walls (`X < -0.19` and `Z > 0.19`) and cover the height from the chute floor up to the divider rim (`Y in [0.70, 1.05]`). In addition, prize pool spawners must enforce a clean safety margin away from the chute boundary so resting toys never sit on or against the chute dividers.
 
