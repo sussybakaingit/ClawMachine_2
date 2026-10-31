@@ -18,4 +18,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.045, 0)
 shape = SubResource("SphereShape3D_sr5ql")
 
 [node name="Model" type="Node3D" parent="." unique_id=1891691228 instance=ExtResource("2_55myh")]
-transform = Transform3D(0.00045, 0, 0, 0, 0.00045, 0, 0, 0, 0.00045, 0, 0, 0)
+transform = Transform3D(0.005, 0, 0, 0, 0.005, 0, 0, 0, 0.005, 0, 0, 0)
