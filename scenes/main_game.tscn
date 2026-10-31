@@ -1,24 +1,22 @@
 [gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/main_game.gd" id="1_main"]
-[ext_resource type="Texture2D" path="res://Assets/Background/carl-raw-8Gdayy2Lhi0-unsplash.jpg" id="2_bg"]
+[ext_resource type="Texture2D" path="res://Assets/Background/arcade_neon_hall.jpg" id="2_bg"]
 [ext_resource type="PackedScene" path="res://scenes/claw_machine.tscn" id="3_machine"]
 [ext_resource type="PackedScene" path="res://scenes/camera_rig.tscn" id="4_cam"]
 [ext_resource type="Script" path="res://scripts/ui_manager.gd" id="5_ui"]
 [ext_resource type="PackedScene" path="res://scenes/settings_menu.tscn" id="6_settings"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_clean"]
-sky_top_color = Color(0.18, 0.22, 0.32, 1)
-sky_horizon_color = Color(0.24, 0.28, 0.38, 1)
-ground_bottom_color = Color(0.1, 0.12, 0.16, 1)
-ground_horizon_color = Color(0.18, 0.22, 0.3, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_arcade"]
+panorama = ExtResource("2_bg")
 
 [sub_resource type="Sky" id="Sky_Arcade"]
-sky_material = SubResource("ProceduralSkyMaterial_clean")
+sky_material = SubResource("PanoramaSkyMaterial_arcade")
 
 [sub_resource type="Environment" id="Environment_1"]
 background_mode = 2
 sky = SubResource("Sky_Arcade")
+sky_rotation = Vector3(0, 3.14159, 0)
 ambient_light_source = 3
 ambient_light_color = Color(0.92, 0.94, 0.98, 1)
 ambient_light_energy = 1.15
@@ -30,11 +28,23 @@ glow_intensity = 0.35
 glow_bloom = 0.12
 glow_blend_mode = 0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_backdrop"]
+shading_mode = 0
+albedo_texture = ExtResource("2_bg")
+
+[sub_resource type="QuadMesh" id="QuadMesh_backdrop"]
+material = SubResource("StandardMaterial3D_backdrop")
+size = Vector2(8.5, 4.75)
+
 [node name="MainGame" type="Node3D"]
 script = ExtResource("1_main")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1")
+
+[node name="ArcadeBackdrop" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, -2.8)
+mesh = SubResource("QuadMesh_backdrop")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.819152, -0.40558, 0.40558, 0, 0.707107, 0.707107, -0.573576, -0.579228, 0.579228, 0, 0, 0)
