@@ -20,3 +20,8 @@
 - **Root Cause:** In arcade cabinets where the floor collider spans the full cabinet, toys dropped into the chute pocket land on the floor at `Y ~ 0.76` inside the walled pocket (`X < -0.18` and `Z > 0.18`). If an Area3D trigger or filter checks `Y < 0.74`, the landed toy is rejected; if it checks without horizontal bounds (`X` and `Z`), toys resting on the prize bed get falsely counted.
 - **Rule:** The delivery trigger area and spatial fallback must be bounded strictly by the chute's horizontal walls (`X < -0.19` and `Z > 0.19`) and cover the height from the chute floor up to the divider rim (`Y in [0.70, 1.05]`). In addition, prize pool spawners must enforce a clean safety margin away from the chute boundary so resting toys never sit on or against the chute dividers.
 
+## 5. Visual Asset Scaling & Metric Verification
+- **Symptom:** 3D model appears gargantuan (spanning outside the level or enveloping the camera) or microscopic (fractions of a millimeter).
+- **Root Cause:** Raw glTF/FBX assets from various sources have widely different root node transformations (e.g., Blender default $\times 100$, centimeters vs meters).
+- **Rule:** Always measure instantiated scene world AABBs (`AABB.size`) across all interactive objects to ensure they fit within physical gameplay metrics (e.g. 10–18 cm for claw machine toys) and match their physics collision shapes.
+
