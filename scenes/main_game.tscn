@@ -1,0 +1,454 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/main_game.gd" id="1_main"]
+[ext_resource type="Texture2D" path="res://Assets/Background/carl-raw-8Gdayy2Lhi0-unsplash.jpg" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/claw_machine.tscn" id="3_machine"]
+[ext_resource type="PackedScene" path="res://scenes/camera_rig.tscn" id="4_cam"]
+[ext_resource type="Script" path="res://scripts/ui_manager.gd" id="5_ui"]
+[ext_resource type="PackedScene" path="res://scenes/settings_menu.tscn" id="6_settings"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_clean"]
+sky_top_color = Color(0.24, 0.28, 0.38, 1)
+sky_horizon_color = Color(0.18, 0.20, 0.28, 1)
+ground_bottom_color = Color(0.12, 0.13, 0.18, 1)
+ground_horizon_color = Color(0.18, 0.20, 0.28, 1)
+
+[sub_resource type="Sky" id="Sky_Arcade"]
+sky_material = SubResource("ProceduralSkyMaterial_clean")
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 2
+sky = SubResource("Sky_Arcade")
+ambient_light_source = 3
+ambient_light_color = Color(0.9, 0.92, 0.95, 1)
+ambient_light_energy = 0.85
+tonemap_mode = 3
+tonemap_exposure = 1.05
+glow_enabled = true
+glow_intensity = 0.3
+glow_bloom = 0.1
+glow_blend_mode = 0
+
+[node name="MainGame" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.819152, -0.40558, 0.40558, 0, 0.707107, 0.707107, -0.573576, -0.579228, 0.579228, 0, 0, 0)
+light_color = Color(1, 0.98, 0.94, 1)
+light_energy = 1.3
+shadow_enabled = true
+
+[node name="FillLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.707107, 0, -0.707107, -0.353553, 0.866025, 0.353553, 0.612372, 0.5, -0.612372, 0, 0, 0)
+light_color = Color(0.7, 0.8, 0.95, 1)
+light_energy = 0.55
+
+[node name="ClawMachineTopLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 0)
+light_color = Color(1, 0.98, 0.92, 1)
+light_energy = 2.2
+omni_range = 2.8
+omni_attenuation = 0.9
+
+[node name="ClawSpotlight" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2.05, 0)
+light_color = Color(1, 0.94, 0.85, 1)
+light_energy = 2.4
+spot_range = 2.8
+spot_angle = 40.0
+
+[node name="ChuteAccentLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, 0.95, 0.28)
+light_color = Color(0.2, 0.85, 1.0, 1)
+light_energy = 1.3
+omni_range = 0.9
+
+[node name="BackPoolAccentLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 1.05, -0.2)
+light_color = Color(1.0, 0.8, 0.92, 1)
+light_energy = 1.0
+omni_range = 1.0
+
+[node name="ClawMachine" parent="." instance=ExtResource("3_machine")]
+
+[node name="CameraRig" parent="." instance=ExtResource("4_cam")]
+
+[node name="UIManager" type="CanvasLayer" parent="."]
+script = ExtResource("5_ui")
+
+[node name="HUD" type="Control" parent="UIManager"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="PanelContainer" parent="UIManager/HUD"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Margin" type="MarginContainer" parent="UIManager/HUD/TopBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="HBox" type="HBoxContainer" parent="UIManager/HUD/TopBar/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TimePanel" type="PanelContainer" parent="UIManager/HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+
+[node name="LblTime" type="Label" parent="UIManager/HUD/TopBar/Margin/HBox/TimePanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "TIME: 60"
+
+[node name="ScorePanel" type="PanelContainer" parent="UIManager/HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+
+[node name="LblScore" type="Label" parent="UIManager/HUD/TopBar/Margin/HBox/ScorePanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "SCORE: 0 (x1)"
+
+[node name="DeliveredPanel" type="PanelContainer" parent="UIManager/HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+
+[node name="LblDelivered" type="Label" parent="UIManager/HUD/TopBar/Margin/HBox/DeliveredPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "DELIVERED: 0"
+
+[node name="Spacer" type="Control" parent="UIManager/HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnFront" type="Button" parent="UIManager/HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+text = "Front"
+
+[node name="BtnSide" type="Button" parent="UIManager/HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+text = "Side"
+
+[node name="BtnTop" type="Button" parent="UIManager/HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+text = "Top"
+
+[node name="BtnHole" type="Button" parent="UIManager/HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+text = "Delivery Hole"
+
+[node name="BtnResetCam" type="Button" parent="UIManager/HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+text = "Reset Cam"
+
+[node name="BtnPause" type="Button" parent="UIManager/HUD/TopBar/Margin/HBox"]
+layout_mode = 2
+text = "PAUSE"
+
+[node name="ClawStatePanel" type="PanelContainer" parent="UIManager/HUD"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -60.0
+offset_right = 260.0
+offset_bottom = -20.0
+grow_vertical = 0
+
+[node name="LblClawState" type="Label" parent="UIManager/HUD/ClawStatePanel"]
+layout_mode = 2
+text = "CLAW: READY"
+
+[node name="HandTrackingHUD" type="PanelContainer" parent="UIManager/HUD"]
+custom_minimum_size = Vector2(240, 240)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -260.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="VBox" type="VBoxContainer" parent="UIManager/HUD/HandTrackingHUD"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="UIManager/HUD/HandTrackingHUD/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+text = "LIVE HAND TRACKING"
+horizontal_alignment = 1
+
+[node name="LblStatus" type="Label" parent="UIManager/HUD/HandTrackingHUD/VBox"]
+layout_mode = 2
+text = "CAM: Active"
+
+[node name="LblConfidence" type="Label" parent="UIManager/HUD/HandTrackingHUD/VBox"]
+layout_mode = 2
+text = "Confidence: 0%"
+
+[node name="LblGesture" type="Label" parent="UIManager/HUD/HandTrackingHUD/VBox"]
+layout_mode = 2
+text = "Gesture: None"
+
+[node name="Visualizer" type="Panel" parent="UIManager/HUD/HandTrackingHUD/VBox"]
+custom_minimum_size = Vector2(200, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="PreviewRect" type="TextureRect" parent="UIManager/HUD/HandTrackingHUD/VBox/Visualizer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Cursor" type="ColorRect" parent="UIManager/HUD/HandTrackingHUD/VBox/Visualizer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0, 1, 0.2, 1)
+
+[node name="CelebrationBanner" type="PanelContainer" parent="UIManager/HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -40.0
+offset_right = 200.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LblMessage" type="Label" parent="UIManager/HUD/CelebrationBanner"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
+theme_override_font_sizes/font_size = 24
+text = "🎉 DELIVERED: TOY (+100 pts)!"
+horizontal_alignment = 1
+
+[node name="PauseMenu" type="Control" parent="UIManager"]
+visible = false
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="UIManager/PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="Panel" type="PanelContainer" parent="UIManager/PauseMenu"]
+custom_minimum_size = Vector2(300, 280)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -140.0
+offset_right = 150.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="UIManager/PauseMenu/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="UIManager/PauseMenu/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "GAME PAUSED"
+horizontal_alignment = 1
+
+[node name="BtnResume" type="Button" parent="UIManager/PauseMenu/Panel/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "RESUME"
+
+[node name="BtnRestart" type="Button" parent="UIManager/PauseMenu/Panel/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "RESTART ROUND"
+
+[node name="BtnSettings" type="Button" parent="UIManager/PauseMenu/Panel/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="BtnMenu" type="Button" parent="UIManager/PauseMenu/Panel/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "MAIN MENU"
+
+[node name="ResultsScreen" type="Control" parent="UIManager"]
+visible = false
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="UIManager/ResultsScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.75)
+
+[node name="Panel" type="PanelContainer" parent="UIManager/ResultsScreen"]
+custom_minimum_size = Vector2(360, 320)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -160.0
+offset_right = 180.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="UIManager/ResultsScreen/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="UIManager/ResultsScreen/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "ROUND FINISHED!"
+horizontal_alignment = 1
+
+[node name="LblRecordBadge" type="Label" parent="UIManager/ResultsScreen/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+text = "🏆 NEW HIGH SCORE! 🏆"
+horizontal_alignment = 1
+
+[node name="LblFinalScore" type="Label" parent="UIManager/ResultsScreen/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Final Score: 0"
+horizontal_alignment = 1
+
+[node name="LblFinalToys" type="Label" parent="UIManager/ResultsScreen/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Toys Delivered: 0"
+horizontal_alignment = 1
+
+[node name="BtnPlayAgain" type="Button" parent="UIManager/ResultsScreen/Panel/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "PLAY AGAIN"
+
+[node name="BtnMenu" type="Button" parent="UIManager/ResultsScreen/Panel/VBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "MAIN MENU"
+
+[node name="TutorialDialog" type="PanelContainer" parent="UIManager"]
+visible = false
+custom_minimum_size = Vector2(560, 360)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -180.0
+offset_right = 280.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="UIManager/TutorialDialog"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="UIManager/TutorialDialog/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 22
+text = "QUICK START: HOW TO PLAY"
+horizontal_alignment = 1
+
+[node name="Body" type="Label" parent="UIManager/TutorialDialog/VBox"]
+layout_mode = 2
+text = "1. WEBCAM HAND CONTROLS:
+• Move your hand Left/Right/Up/Down in front of webcam to guide the claw.
+• PINCH (thumb + index) to lower claw and grab a toy!
+• MANUALLY MOVE claw over the delivery hole (front-left chute)!
+• PINCH or release hand to drop the toy into the chute to score!
+
+2. KEYBOARD CONTROLS:
+• Move Claw: WASD or Arrow Keys
+• Grab Toy: Spacebar or Enter
+• Release Toy: R or Spacebar
+• Camera Orbit: Right-Click + Drag
+• Camera Zoom: Scroll Wheel (or use presets at top)"
+autowrap_mode = 3
+
+[node name="BtnCloseTut" type="Button" parent="UIManager/TutorialDialog/VBox"]
+custom_minimum_size = Vector2(160, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "START PLAYING!"
+
+[node name="SettingsMenu" parent="UIManager" instance=ExtResource("6_settings")]
+visible = false
+
+[connection signal="pressed" from="UIManager/HUD/TopBar/Margin/HBox/BtnFront" to="UIManager" method="_on_btn_cam_front_pressed"]
+[connection signal="pressed" from="UIManager/HUD/TopBar/Margin/HBox/BtnSide" to="UIManager" method="_on_btn_cam_side_pressed"]
+[connection signal="pressed" from="UIManager/HUD/TopBar/Margin/HBox/BtnTop" to="UIManager" method="_on_btn_cam_top_pressed"]
+[connection signal="pressed" from="UIManager/HUD/TopBar/Margin/HBox/BtnHole" to="UIManager" method="_on_btn_cam_hole_pressed"]
+[connection signal="pressed" from="UIManager/HUD/TopBar/Margin/HBox/BtnResetCam" to="UIManager" method="_on_btn_cam_reset_pressed"]
+[connection signal="pressed" from="UIManager/HUD/TopBar/Margin/HBox/BtnPause" to="UIManager" method="_on_btn_pause_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/Panel/VBox/BtnResume" to="UIManager" method="_on_btn_resume_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/Panel/VBox/BtnRestart" to="UIManager" method="_on_btn_restart_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/Panel/VBox/BtnSettings" to="UIManager" method="_on_btn_settings_pressed"]
+[connection signal="pressed" from="UIManager/PauseMenu/Panel/VBox/BtnMenu" to="UIManager" method="_on_btn_menu_pressed"]
+[connection signal="pressed" from="UIManager/ResultsScreen/Panel/VBox/BtnPlayAgain" to="UIManager" method="_on_btn_restart_pressed"]
+[connection signal="pressed" from="UIManager/ResultsScreen/Panel/VBox/BtnMenu" to="UIManager" method="_on_btn_menu_pressed"]
+[connection signal="pressed" from="UIManager/TutorialDialog/VBox/BtnCloseTut" to="UIManager" method="_on_btn_close_tutorial_pressed"]

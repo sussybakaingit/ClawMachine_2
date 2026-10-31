@@ -1,0 +1,307 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/settings_ui.gd" id="1_settings"]
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_settings")
+
+[node name="Dimmer" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.75)
+
+[node name="Panel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(640, 520)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -260.0
+offset_right = 320.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainVBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Panel/MainVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "SETTINGS & CALIBRATION"
+horizontal_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="Panel/MainVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Controls" type="MarginContainer" parent="Panel/MainVBox/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="Panel/MainVBox/TabContainer/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HandSens" type="HBoxContainer" parent="Panel/MainVBox/TabContainer/Controls/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MainVBox/TabContainer/Controls/VBox/HandSens"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Hand Sensitivity"
+
+[node name="Slider" type="HSlider" parent="Panel/MainVBox/TabContainer/Controls/VBox/HandSens"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.2
+max_value = 3.0
+step = 0.1
+value = 1.0
+
+[node name="Smoothing" type="HBoxContainer" parent="Panel/MainVBox/TabContainer/Controls/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MainVBox/TabContainer/Controls/VBox/Smoothing"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Movement Smoothing"
+
+[node name="Slider" type="HSlider" parent="Panel/MainVBox/TabContainer/Controls/VBox/Smoothing"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.05
+max_value = 0.95
+step = 0.05
+value = 0.5
+
+[node name="Deadzone" type="HBoxContainer" parent="Panel/MainVBox/TabContainer/Controls/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MainVBox/TabContainer/Controls/VBox/Deadzone"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Dead Zone"
+
+[node name="Slider" type="HSlider" parent="Panel/MainVBox/TabContainer/Controls/VBox/Deadzone"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.01
+max_value = 0.2
+step = 0.01
+value = 0.05
+
+[node name="InvertH" type="CheckBox" parent="Panel/MainVBox/TabContainer/Controls/VBox"]
+layout_mode = 2
+text = "Invert Horizontal Movement"
+
+[node name="GrabGesture" type="HBoxContainer" parent="Panel/MainVBox/TabContainer/Controls/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MainVBox/TabContainer/Controls/VBox/GrabGesture"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Grab Gesture:"
+
+[node name="Option" type="OptionButton" parent="Panel/MainVBox/TabContainer/Controls/VBox/GrabGesture"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ReleaseGesture" type="HBoxContainer" parent="Panel/MainVBox/TabContainer/Controls/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MainVBox/TabContainer/Controls/VBox/ReleaseGesture"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Release Gesture:"
+
+[node name="Option" type="OptionButton" parent="Panel/MainVBox/TabContainer/Controls/VBox/ReleaseGesture"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnRecalibrate" type="Button" parent="Panel/MainVBox/TabContainer/Controls/VBox"]
+layout_mode = 2
+text = "Recalibrate Neutral Hand Position"
+
+[node name="Graphics" type="MarginContainer" parent="Panel/MainVBox/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="Panel/MainVBox/TabContainer/Graphics"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Quality" type="HBoxContainer" parent="Panel/MainVBox/TabContainer/Graphics/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MainVBox/TabContainer/Graphics/VBox/Quality"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Graphics Quality:"
+
+[node name="Option" type="OptionButton" parent="Panel/MainVBox/TabContainer/Graphics/VBox/Quality"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Fullscreen" type="CheckBox" parent="Panel/MainVBox/TabContainer/Graphics/VBox"]
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="VSync" type="CheckBox" parent="Panel/MainVBox/TabContainer/Graphics/VBox"]
+layout_mode = 2
+text = "Enable V-Sync"
+
+[node name="FOV" type="HBoxContainer" parent="Panel/MainVBox/TabContainer/Graphics/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MainVBox/TabContainer/Graphics/VBox/FOV"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Camera FOV"
+
+[node name="Slider" type="HSlider" parent="Panel/MainVBox/TabContainer/Graphics/VBox/FOV"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 45.0
+max_value = 90.0
+step = 1.0
+value = 65.0
+
+[node name="Audio" type="MarginContainer" parent="Panel/MainVBox/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="Panel/MainVBox/TabContainer/Audio"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MasterVol" type="HBoxContainer" parent="Panel/MainVBox/TabContainer/Audio/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MainVBox/TabContainer/Audio/VBox/MasterVol"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Master Volume"
+
+[node name="Slider" type="HSlider" parent="Panel/MainVBox/TabContainer/Audio/VBox/MasterVol"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.0
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="MusicVol" type="HBoxContainer" parent="Panel/MainVBox/TabContainer/Audio/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MainVBox/TabContainer/Audio/VBox/MusicVol"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Music Volume"
+
+[node name="Slider" type="HSlider" parent="Panel/MainVBox/TabContainer/Audio/VBox/MusicVol"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.0
+max_value = 1.0
+step = 0.05
+value = 0.7
+
+[node name="SFXVol" type="HBoxContainer" parent="Panel/MainVBox/TabContainer/Audio/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MainVBox/TabContainer/Audio/VBox/SFXVol"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="Slider" type="HSlider" parent="Panel/MainVBox/TabContainer/Audio/VBox/SFXVol"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.0
+max_value = 1.0
+step = 0.05
+value = 0.9
+
+[node name="Mute" type="CheckBox" parent="Panel/MainVBox/TabContainer/Audio/VBox"]
+layout_mode = 2
+text = "Mute All Audio"
+
+[node name="Gameplay" type="MarginContainer" parent="Panel/MainVBox/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="Panel/MainVBox/TabContainer/Gameplay"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Duration" type="HBoxContainer" parent="Panel/MainVBox/TabContainer/Gameplay/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MainVBox/TabContainer/Gameplay/VBox/Duration"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Default Round Duration:"
+
+[node name="Option" type="OptionButton" parent="Panel/MainVBox/TabContainer/Gameplay/VBox/Duration"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GripDiff" type="HBoxContainer" parent="Panel/MainVBox/TabContainer/Gameplay/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MainVBox/TabContainer/Gameplay/VBox/GripDiff"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Grab Grip Strength"
+
+[node name="Slider" type="HSlider" parent="Panel/MainVBox/TabContainer/Gameplay/VBox/GripDiff"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.5
+max_value = 1.0
+step = 0.05
+value = 0.85
+
+[node name="ShowTutorial" type="CheckBox" parent="Panel/MainVBox/TabContainer/Gameplay/VBox"]
+layout_mode = 2
+text = "Show Tutorial On Start"
+
+[node name="BtnClose" type="Button" parent="Panel/MainVBox"]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Save & Close"
+
+[connection signal="pressed" from="Panel/MainVBox/TabContainer/Controls/VBox/BtnRecalibrate" to="." method="_on_btn_recalibrate_pressed"]
+[connection signal="pressed" from="Panel/MainVBox/BtnClose" to="." method="_on_btn_close_pressed"]

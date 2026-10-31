@@ -1,0 +1,76 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://Assets/Claw machine/clawMachine.glb" id="1_vhxm2"]
+[ext_resource type="PackedScene" path="res://scenes/claw_assembly.tscn" id="2_4luw5"]
+[ext_resource type="Script" path="res://scripts/prize_manager.gd" id="3_43qfp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8v8um"]
+size = Vector3(1, 0.04, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ooy7y"]
+size = Vector3(1, 1.2, 0.06)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3uoos"]
+size = Vector3(1, 1.2, 0.06)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_purin"]
+size = Vector3(0.06, 1.2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3m00t"]
+size = Vector3(0.06, 1.2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oolue"]
+size = Vector3(0.02, 0.35, 0.22)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m0yxf"]
+size = Vector3(0.22, 0.35, 0.02)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_chute_trigger"]
+size = Vector3(0.22, 0.25, 0.22)
+
+[node name="ClawMachine" type="Node3D" unique_id=1386709939]
+
+[node name="MachineModel" type="Node3D" parent="." unique_id=1509034489 instance=ExtResource("1_vhxm2")]
+
+[node name="CabinetColliders" type="StaticBody3D" parent="." unique_id=2093620630]
+
+[node name="Floor" type="CollisionShape3D" parent="CabinetColliders" unique_id=886162075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.74, 0)
+shape = SubResource("BoxShape3D_8v8um")
+
+[node name="BackWall" type="CollisionShape3D" parent="CabinetColliders" unique_id=1572202136]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, -0.48)
+shape = SubResource("BoxShape3D_ooy7y")
+
+[node name="FrontGlass" type="CollisionShape3D" parent="CabinetColliders" unique_id=150865450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0.48)
+shape = SubResource("BoxShape3D_3uoos")
+
+[node name="LeftGlass" type="CollisionShape3D" parent="CabinetColliders" unique_id=314540782]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.48, 1.35, 0)
+shape = SubResource("BoxShape3D_purin")
+
+[node name="RightGlass" type="CollisionShape3D" parent="CabinetColliders" unique_id=228203938]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48, 1.35, 0)
+shape = SubResource("BoxShape3D_3m00t")
+
+[node name="ChuteDividerRight" type="CollisionShape3D" parent="CabinetColliders" unique_id=2059227732]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18, 0.9, 0.28)
+shape = SubResource("BoxShape3D_oolue")
+
+[node name="ChuteDividerBack" type="CollisionShape3D" parent="CabinetColliders" unique_id=558078167]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, 0.9, 0.18)
+shape = SubResource("BoxShape3D_m0yxf")
+
+[node name="DeliveryHoleArea" type="Area3D" parent="." unique_id=1776761046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32, 0.6, 0.32)
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DeliveryHoleArea" unique_id=381927401]
+shape = SubResource("BoxShape3D_chute_trigger")
+
+[node name="ClawAssembly" type="Node3D" parent="." unique_id=612277780 instance=ExtResource("2_4luw5")]
+
+[node name="PrizeManager" type="Node3D" parent="." unique_id=584286972]
+script = ExtResource("3_43qfp")

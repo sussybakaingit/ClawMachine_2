@@ -1,0 +1,20 @@
+# Godot 4+ specific ignores
+.godot/
+*.translation
+
+# Python Virtualenv & Cache
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS metadata
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

@@ -1,0 +1,147 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/claw_controller.gd" id="1_claw"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_DarkGantry"]
+albedo_color = Color(0.2, 0.22, 0.25, 1)
+metallic = 0.8
+roughness = 0.3
+
+[sub_resource type="BoxMesh" id="Mesh_GantryBar"]
+size = Vector3(0.06, 0.04, 0.9)
+
+[sub_resource type="StandardMaterial3D" id="Mat_CarriageYellow"]
+albedo_color = Color(1, 0.75, 0.1, 1)
+metallic = 0.5
+roughness = 0.35
+
+[sub_resource type="BoxMesh" id="Mesh_CarriageBox"]
+size = Vector3(0.14, 0.07, 0.14)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Cable"]
+albedo_color = Color(0.15, 0.15, 0.18, 1)
+metallic = 0.9
+roughness = 0.2
+
+[sub_resource type="CylinderMesh" id="Mesh_Cable"]
+top_radius = 0.006
+bottom_radius = 0.006
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_ClawChrome"]
+albedo_color = Color(0.92, 0.94, 0.97, 1)
+metallic = 0.95
+roughness = 0.15
+
+[sub_resource type="StandardMaterial3D" id="Mat_ClawGold"]
+albedo_color = Color(1, 0.82, 0.2, 1)
+metallic = 0.85
+roughness = 0.25
+
+[sub_resource type="CylinderMesh" id="Mesh_ClawCap"]
+top_radius = 0.045
+bottom_radius = 0.065
+height = 0.07
+
+[sub_resource type="SphereShape3D" id="Shape_GrabSphere"]
+radius = 0.25
+
+[sub_resource type="BoxMesh" id="Mesh_UpperArm"]
+size = Vector3(0.022, 0.09, 0.022)
+
+[sub_resource type="BoxMesh" id="Mesh_LowerClawTip"]
+size = Vector3(0.018, 0.08, 0.018)
+
+[sub_resource type="SphereMesh" id="Mesh_FingerJoint"]
+radius = 0.016
+height = 0.032
+
+[node name="ClawController" type="Node3D"]
+script = ExtResource("1_claw")
+
+[node name="GantryX" type="Node3D" parent="."]
+
+[node name="GantryBar" type="MeshInstance3D" parent="GantryX"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.77, 0)
+material_override = SubResource("Mat_DarkGantry")
+mesh = SubResource("Mesh_GantryBar")
+
+[node name="CarriageZ" type="Node3D" parent="GantryX"]
+
+[node name="CarriageBox" type="MeshInstance3D" parent="GantryX/CarriageZ"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.77, 0)
+material_override = SubResource("Mat_CarriageYellow")
+mesh = SubResource("Mesh_CarriageBox")
+
+[node name="CableMesh" type="MeshInstance3D" parent="GantryX/CarriageZ"]
+material_override = SubResource("Mat_Cable")
+mesh = SubResource("Mesh_Cable")
+
+[node name="ClawHead" type="Node3D" parent="GantryX/CarriageZ"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.62, 0)
+
+[node name="CapMesh" type="MeshInstance3D" parent="GantryX/CarriageZ/ClawHead"]
+material_override = SubResource("Mat_ClawChrome")
+mesh = SubResource("Mesh_ClawCap")
+
+[node name="GrabArea" type="Area3D" parent="GantryX/CarriageZ/ClawHead"]
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GantryX/CarriageZ/ClawHead/GrabArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.06, 0)
+shape = SubResource("Shape_GrabSphere")
+
+[node name="Fingers" type="Node3D" parent="GantryX/CarriageZ/ClawHead"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 0)
+
+[node name="Finger1" type="Node3D" parent="GantryX/CarriageZ/ClawHead/Fingers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0, 0)
+
+[node name="Joint" type="MeshInstance3D" parent="GantryX/CarriageZ/ClawHead/Fingers/Finger1"]
+material_override = SubResource("Mat_ClawGold")
+mesh = SubResource("Mesh_FingerJoint")
+
+[node name="Upper" type="MeshInstance3D" parent="GantryX/CarriageZ/ClawHead/Fingers/Finger1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.045, 0)
+material_override = SubResource("Mat_ClawChrome")
+mesh = SubResource("Mesh_UpperArm")
+
+[node name="LowerTip" type="MeshInstance3D" parent="GantryX/CarriageZ/ClawHead/Fingers/Finger1"]
+transform = Transform3D(0.925417, 0, 0.378949, 0, 1, 0, -0.378949, 0, 0.925417, -0.015, -0.11, 0)
+material_override = SubResource("Mat_ClawGold")
+mesh = SubResource("Mesh_LowerClawTip")
+
+[node name="Finger2" type="Node3D" parent="GantryX/CarriageZ/ClawHead/Fingers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, 0)
+
+[node name="Joint" type="MeshInstance3D" parent="GantryX/CarriageZ/ClawHead/Fingers/Finger2"]
+material_override = SubResource("Mat_ClawGold")
+mesh = SubResource("Mesh_FingerJoint")
+
+[node name="Upper" type="MeshInstance3D" parent="GantryX/CarriageZ/ClawHead/Fingers/Finger2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.045, 0)
+material_override = SubResource("Mat_ClawChrome")
+mesh = SubResource("Mesh_UpperArm")
+
+[node name="LowerTip" type="MeshInstance3D" parent="GantryX/CarriageZ/ClawHead/Fingers/Finger2"]
+transform = Transform3D(0.925417, 0, -0.378949, 0, 1, 0, 0.378949, 0, 0.925417, 0.015, -0.11, 0)
+material_override = SubResource("Mat_ClawGold")
+mesh = SubResource("Mesh_LowerClawTip")
+
+[node name="Finger3" type="Node3D" parent="GantryX/CarriageZ/ClawHead/Fingers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
+
+[node name="Joint" type="MeshInstance3D" parent="GantryX/CarriageZ/ClawHead/Fingers/Finger3"]
+material_override = SubResource("Mat_ClawGold")
+mesh = SubResource("Mesh_FingerJoint")
+
+[node name="Upper" type="MeshInstance3D" parent="GantryX/CarriageZ/ClawHead/Fingers/Finger3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.045, 0)
+material_override = SubResource("Mat_ClawChrome")
+mesh = SubResource("Mesh_UpperArm")
+
+[node name="LowerTip" type="MeshInstance3D" parent="GantryX/CarriageZ/ClawHead/Fingers/Finger3"]
+transform = Transform3D(1, 0, 0, 0, 0.925417, 0.378949, 0, -0.378949, 0.925417, 0, -0.11, -0.015)
+material_override = SubResource("Mat_ClawGold")
+mesh = SubResource("Mesh_LowerClawTip")

@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/prize.gd" id="1_15hqt"]
+[ext_resource type="PackedScene" path="res://Assets/Toys/woody_toy_story.glb" id="2_wd5o1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lear5"]
+radius = 0.05
+height = 0.16
+
+[node name="Toy_woody" type="RigidBody3D" unique_id=286441321]
+mass = 0.5
+script = ExtResource("1_15hqt")
+toy_id = "woody"
+toy_name = "Sheriff Woody"
+score_value = 150
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1022958698]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("CapsuleShape3D_lear5")
+
+[node name="Model" type="Node3D" parent="." unique_id=1390944184 instance=ExtResource("2_wd5o1")]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0, 0, 0)

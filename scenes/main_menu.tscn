@@ -1,0 +1,192 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_menu"]
+[ext_resource type="Texture2D" path="res://Assets/Background/carl-raw-8Gdayy2Lhi0-unsplash.jpg" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/settings_menu.tscn" id="3_settings"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.12, 0.14, 0.2, 0.85)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Tint" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.12, 0.6)
+
+[node name="TitleVBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 60.0
+offset_right = 300.0
+offset_bottom = 180.0
+grow_horizontal = 2
+
+[node name="Title" type="Label" parent="TitleVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 46
+text = "CLAW MACHINE 3D"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.8, 0.3, 1)
+theme_override_font_sizes/font_size = 18
+text = "AI WEBCAM HAND-CONTROLLED ARCADE"
+horizontal_alignment = 1
+
+[node name="VBoxButtons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -60.0
+offset_right = 140.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="BtnStart60" type="Button" parent="VBoxButtons"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "PLAY 60 SECONDS"
+
+[node name="BtnStart30" type="Button" parent="VBoxButtons"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "PLAY 30 SECONDS"
+
+[node name="BtnSettings" type="Button" parent="VBoxButtons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="BtnTutorial" type="Button" parent="VBoxButtons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "HOW TO PLAY"
+
+[node name="BtnQuit" type="Button" parent="VBoxButtons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "QUIT"
+
+[node name="HighScorePanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -110.0
+offset_right = 260.0
+offset_bottom = -30.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="VBox" type="VBoxContainer" parent="HighScorePanel"]
+layout_mode = 2
+alignment = 1
+
+[node name="LblTitle" type="Label" parent="HighScorePanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+text = "HIGH SCORES"
+horizontal_alignment = 1
+
+[node name="LblScore60" type="Label" parent="HighScorePanel/VBox"]
+layout_mode = 2
+text = "60s Best Score: 0"
+horizontal_alignment = 1
+
+[node name="LblScore30" type="Label" parent="HighScorePanel/VBox"]
+layout_mode = 2
+text = "30s Best Score: 0"
+horizontal_alignment = 1
+
+[node name="SettingsMenu" parent="." instance=ExtResource("3_settings")]
+visible = false
+layout_mode = 1
+
+[node name="TutorialDialog" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -180.0
+offset_right = 280.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="TutorialDialog"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="TutorialDialog/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 20
+text = "HOW TO PLAY"
+horizontal_alignment = 1
+
+[node name="Body" type="Label" parent="TutorialDialog/VBox"]
+layout_mode = 2
+text = "1. WEBCAM HAND CONTROLS:
+• Move your hand Left/Right & Up/Down in front of camera to position the claw.
+• PINCH (thumb + index) to drop the claw and grab a toy!
+• After grabbing, MANUALLY navigate the claw to the delivery chute (front-left)!
+• PINCH or open hand to release the toy into the chute to score!
+
+2. KEYBOARD FALLBACK:
+• Move: WASD or Arrow Keys
+• Grab: Spacebar or Enter
+• Release: R or Spacebar
+• Camera: Right-Click + Drag, Scroll Wheel to Zoom
+• Presets: C to reset camera"
+autowrap_mode = 3
+
+[node name="BtnClose" type="Button" parent="TutorialDialog/VBox"]
+custom_minimum_size = Vector2(140, 36)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "GOT IT!"
+
+[connection signal="pressed" from="TutorialDialog/VBox/BtnClose" to="." method="_on_close_tutorial"]
+

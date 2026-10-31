@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/prize.gd" id="1_m5wir"]
+[ext_resource type="PackedScene" path="res://Assets/Toys/toy_car.glb" id="2_6m8sf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ptjug"]
+size = Vector3(0.08, 0.06, 0.16)
+
+[node name="Toy_toy_car" type="RigidBody3D" unique_id=383562553]
+mass = 0.5
+script = ExtResource("1_m5wir")
+toy_id = "toy_car"
+toy_name = "Race Car"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1518723121]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("BoxShape3D_ptjug")
+
+[node name="Model" type="Node3D" parent="." unique_id=753669148 instance=ExtResource("2_6m8sf")]
+transform = Transform3D(0.12, 0, 0, 0, 0.12, 0, 0, 0, 0.12, 0, 0, 0)
