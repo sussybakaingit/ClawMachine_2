@@ -25,3 +25,8 @@
 - **Root Cause:** Raw glTF/FBX assets from various sources have widely different root node transformations (e.g., Blender default $\times 100$, centimeters vs meters).
 - **Rule:** Always measure instantiated scene world AABBs (`AABB.size`) across all interactive objects to ensure they fit within physical gameplay metrics (e.g. 10–18 cm for claw machine toys) and match their physics collision shapes.
 
+## 6. Embedded Model Material Overrides & Background Frustum Coverage
+- **Symptom:** Interior of a 3D model looks blinding chalky white, and background backdrop appears with visible cutting borders and double ghost images.
+- **Root Cause:** Imported 3D models (such as `clawMachine.glb`) often embed materials with extreme emission values (e.g. 15.4 energy) or milky semi-opaque frosted glass (`albedo_color` alpha 0.34, roughness 0.5) that wash out in engine lighting. Simultaneously, wrapping a flat 16:9 photo around a 360-degree PanoramaSky creates spherical distortion that clashes with a foreground quad.
+- **Rule:** Override imported model surfaces with proper PBR properties (crystal clear transparency for glass, realistic low emission values $\le 1.0$). For flat perspective backgrounds, use a dark matching procedural sky combined with a properly scaled ($>20\text{m}$) backdrop positioned to align with the camera frustum and floor level ($Y = 0.0$).
+

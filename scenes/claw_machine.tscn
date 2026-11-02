@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://b5jwr7vugxl3q"]
 
+[ext_resource type="Script" path="res://scripts/claw_machine.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://bj1ioudydurbl" path="res://Assets/Claw machine/clawMachine.glb" id="1_vhxm2"]
 [ext_resource type="PackedScene" path="res://scenes/claw_assembly.tscn" id="2_4luw5"]
 [ext_resource type="Script" uid="uid://dmyq4ariy36mg" path="res://scripts/prize_manager.gd" id="3_43qfp"]
@@ -29,6 +30,7 @@ size = Vector3(0.22, 0.35, 0.02)
 size = Vector3(0.24, 0.32, 0.24)
 
 [node name="ClawMachine" type="Node3D" unique_id=1386709939]
+script = ExtResource("1_script")
 
 [node name="MachineModel" parent="." unique_id=1509034489 instance=ExtResource("1_vhxm2")]
 
